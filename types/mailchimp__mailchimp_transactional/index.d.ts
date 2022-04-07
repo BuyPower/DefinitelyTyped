@@ -98,40 +98,64 @@ declare namespace Mailchimp {
         /**
          * The information on the message to send
          */
-        message: {
-            html?: string;
-            text?: string;
-            subject?: string;
-            from_email?: string;
-            from_name?: string;
-            to: Recipient[];
-            headers?: Record<string, string>;
-            important?: boolean;
-            track_opens?: boolean;
-            track_clicks?: boolean;
-            auto_text?: boolean;
-            auto_html?: boolean;
-            inline_css?: boolean;
-            url_strip_qs?: boolean;
-            preserve_recipients?: boolean;
-            view_content_link?: boolean;
-            bcc_address?: string;
-            tracking_domain?: string;
-            signing_domain?: string;
-            return_path_domain?: string;
-            merge?: boolean;
-            merge_language?: 'mailchimp' | 'handlebars';
-            global_merge_vars?: MergeVar[];
-            merge_vars?: RecipientMergeVar[];
-            tags?: string[];
-            subaccount?: string;
-            google_analytics_domains?: string[];
-            google_analytics_campaign?: string;
-            metadata?: Metadata & { website: string };
-            recipient_metadata?: RecipientMetadata[];
-            attachments?: Attachment[];
-            images?: Image[];
-        };
+        message: Message;
+    }
+    
+    
+
+    /**
+     * @link https://mailchimp.com/developer/transactional/api/messages/
+     */
+    interface SendTemplateMessageRequest extends SendMessageRequest {
+        /**
+         * The name of the template to use
+         */
+        template_name: string;
+        
+        /**
+         * The content of the template
+         */
+        template_content: MessageTemplateContent;
+    }
+    
+    interface MessageTemplateContent {
+        name: string;
+        content: string;
+    }
+    
+    interface Message {
+        html?: string;
+        text?: string;
+        subject?: string;
+        from_email?: string;
+        from_name?: string;
+        to: Recipient[];
+        headers?: Record<string, string>;
+        important?: boolean;
+        track_opens?: boolean;
+        track_clicks?: boolean;
+        auto_text?: boolean;
+        auto_html?: boolean;
+        inline_css?: boolean;
+        url_strip_qs?: boolean;
+        preserve_recipients?: boolean;
+        view_content_link?: boolean;
+        bcc_address?: string;
+        tracking_domain?: string;
+        signing_domain?: string;
+        return_path_domain?: string;
+        merge?: boolean;
+        merge_language?: 'mailchimp' | 'handlebars';
+        global_merge_vars?: MergeVar[];
+        merge_vars?: RecipientMergeVar[];
+        tags?: string[];
+        subaccount?: string;
+        google_analytics_domains?: string[];
+        google_analytics_campaign?: string;
+        metadata?: Metadata & { website: string };
+        recipient_metadata?: RecipientMetadata[];
+        attachments?: Attachment[];
+        images?: Image[];
     }
 
     /**
@@ -164,6 +188,7 @@ declare namespace Mailchimp {
 
     class Messages {
         send(body: SendMessageRequest): Promise<SendMessageResponse | Error>;
+        sendTemplate(body: SendTemplateMessageRequest): Promise<SendMessageResponse | Error>;
     }
 
     class ApiClient {
