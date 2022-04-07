@@ -115,7 +115,7 @@ declare namespace Mailchimp {
         /**
          * The content of the template
          */
-        template_content: MessageTemplateContent;
+        template_content: Array<MessageTemplateContent>;
     }
     
     interface MessageTemplateContent {
